@@ -21,19 +21,18 @@ steps:
     inputs:
       provider: 'azurerm'
       command: 'init'
-      environmentServiceNameAzureRM: $(AZURE_SERVICE_CONNECTION)
-
+     
   - task: TerraformTaskV4@4
     displayName: 'Terraform Plan'
     inputs:
       provider: 'azurerm'
       command: 'plan'
-      environmentServiceNameAzureRM: $(AZURE_SERVICE_CONNECTION)
+     
 
   - task: TerraformTaskV4@4
     displayName: 'Terraform Apply'
     inputs:
       provider: 'azurerm'
       command: 'apply'
-      environmentServiceNameAzureRM: $(AZURE_SERVICE_CONNECTION)
+    
       args: '-auto-approve'
