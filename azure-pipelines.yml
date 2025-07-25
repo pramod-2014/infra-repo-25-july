@@ -6,30 +6,31 @@ trigger:
 pool:
   name: Infra-Runners-pool
 
- 
 steps:
   - task: TerraformInstaller@1
     displayName: 'Install Terraform CLI'
     inputs:
       terraformVersion: 'latest'
 
-  - task: TerraformTaskV4@4
+  - task: TerraformTask@5
     displayName: 'Terraform Init'
     inputs:
       provider: 'azurerm'
       command: 'init'
-     
-  - task: TerraformTaskV4@4
+      backendType: 'none'  # 🔥 Very important to avoid backendServiceArm error
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+  - task: TerraformTask@5
     displayName: 'Terraform Plan'
     inputs:
       provider: 'azurerm'
       command: 'plan'
-     
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-  - task: TerraformTaskV4@4
+  - task: TerraformTask@5
     displayName: 'Terraform Apply'
     inputs:
       provider: 'azurerm'
       command: 'apply'
-    
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
       args: '-auto-approve'
